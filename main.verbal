@@ -10,16 +10,16 @@ end
 
 function main
 begin
-  do declare x equal 20
-  do declare y equal 10
+  do declare x
+  do declare y
   do declare z
-  
-  do z equal x plus y
+
+  do assign z equal x plus y
   do show z
 
   do show x minus y
   do show x divided by y
 
-  do show square x
-  do show area x y
+  do show run square x
+  do show run area x y
 end
