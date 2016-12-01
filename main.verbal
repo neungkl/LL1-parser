@@ -10,8 +10,8 @@ end
 
 function main
 begin
-  do declare x
-  do declare y
+  do declare x equal 20
+  do declare y equal 10
   do declare z
 
   do assign z equal x plus y

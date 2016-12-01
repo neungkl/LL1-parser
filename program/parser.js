@@ -13,6 +13,7 @@ var mapVariableWord = [];
 
 function strcmp(a, b) {
   if(nonReserveWord.indexOf(a) !== -1 || nonReserveWord.indexOf(b) !== -1) return true;
+  if(a == parseInt(a) && b === "NUMBER") return true;
   return a == b;
 }
 
@@ -26,7 +27,7 @@ function findWord(word) {
     }
   }
   if(word == parseInt(word)) {
-    return "NUMBER";
+    return findWord("NUMBER");
   }
   return -1;
 }
@@ -38,14 +39,12 @@ function parse(data) {
 
   let isError = false;
 
-  let t = 0;
-
   console.log("Begin Parse...");
 
   state.push(1);
-  while(!isError && dataIndex < data.length && t++ < 200) {
+  while(!isError && dataIndex < data.length) {
 
-    console.log(state);
+    //console.log(state);
 
     let curState = state.pop();
     if(curState < 0) {
@@ -53,6 +52,7 @@ function parse(data) {
       if(strcmp(data[dataIndex], wordList[curState]) !== true) {
         console.log("Parse Error 0x1 (Word Not Match) :", data[dataIndex], wordList[curState]);
         isError = true;
+        break;
       }
       if(nonReserveWord.indexOf(wordList[curState]) !== -1) {
         mapVariableWord.push({
@@ -69,7 +69,7 @@ function parse(data) {
         wordIndex = findWord(wordList[curState]);
       }
 
-      console.log("--->", curState, wordIndex, data[dataIndex], wordList[curState], nonReserveWord.indexOf(wordList[curState]));
+      //console.log("--->", curState, wordIndex, data[dataIndex], wordList[curState], nonReserveWord.indexOf(wordList[curState]));
 
       if(wordIndex == -1) {
         console.log("Parse Error 0x2 (Forbidden Word) :", data[dataIndex]);
@@ -90,7 +90,6 @@ function parse(data) {
       }
 
       if(typeof pushMap[ruleNo] === "undefined") {
-        console.log("===== No State Found :", ruleNo, curState + 1, wordIndex);
         //isError = true;
       } else {
         console.log("Apply Rule", ruleNo, ":", rule[ruleNo]);
