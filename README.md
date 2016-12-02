@@ -6,3 +6,9 @@ creating a "Verbal" language with your own style of grammar of language
 and also implement some basic staff of language parser from study knowledge.
 
 *In development*
+
+## Usage
+
+```
+npm install -g webpack webpack-dev-server flow
+```
