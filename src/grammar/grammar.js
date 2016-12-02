@@ -28,5 +28,3 @@ PARAMS' -> NUMBER | VARIABLE
 ARITHMETIC_EQUATION -> NUMBER OPERATOR ARITHMETIC_EQUATION | NUMBER
 OPERATOR -> plus | minus | multiply | devide | power
 `;
-
-export default module.exports;

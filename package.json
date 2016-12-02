@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "grunt",
     "start": "grunt && node ./dist/app.js",
-    "test": "mocha --require babel-core/register",
+    "test": "mocha --colors --require babel-core/register",
     "build": "grunt build"
   },
   "repository": {
