@@ -1,30 +1,28 @@
-/* jshint esversion: 6 */
-
-import grammarParser from "../src/grammar/grammarParser.js";
+import parser from "../src/grammar/parser.js";
 
 var chai = require('chai');
 var expect = chai.expect;
 var assert = chai.assert;
 
-describe('Grammar Tokenizer', () => {
+describe('Grammar Parser', () => {
 
   describe('Line Splitter', () => {
     it('line splitter (1)', () => {
-      expect(grammarParser.lineSplit("\na\n\nb\nc")).to.deep.equal([
+      expect(parser.lineSplit("\na\n\nb\nc")).to.deep.equal([
         ['a'],
         ['b'],
         ['c']
       ]);
     });
     it('line splitter (2)', () => {
-      expect(grammarParser.lineSplit("a\n\n\n\nb\nc")).to.deep.equal([
+      expect(parser.lineSplit("a\n\n\n\nb\nc")).to.deep.equal([
         ['a'],
         ['b'],
         ['c']
       ]);
     });
     it('line splitter (3)', () => {
-      expect(grammarParser.lineSplit("a\n   \nb\nc")).to.deep.equal([
+      expect(parser.lineSplit("a\n   \nb\nc")).to.deep.equal([
         ['a'],
         ['b'],
         ['c']
@@ -32,14 +30,14 @@ describe('Grammar Tokenizer', () => {
     });
 
     it('line splitter : Multiple word (1)', () => {
-      expect(grammarParser.lineSplit("\na b c\n\nd\ne")).to.deep.equal([
+      expect(parser.lineSplit("\na b c\n\nd\ne")).to.deep.equal([
         ['a', 'b', 'c'],
         ['d'],
         ['e']
       ]);
     });
     it('line splitter : Multiple word (2)', () => {
-      expect(grammarParser.lineSplit("  a  b c\n\nd\ne   f ")).to.deep.equal([
+      expect(parser.lineSplit("  a  b c\n\nd\ne   f ")).to.deep.equal([
         ['a', 'b', 'c'],
         ['d'],
         ['e', 'f']
@@ -54,19 +52,19 @@ describe('Grammar Tokenizer', () => {
         ['c', '->', 'd'],
         ['e', '->', 'f']
       ];
-      assert.equal(true, grammarParser.validGrammar(grammar));
+      assert.equal(true, parser.validGrammar(grammar));
     });
     it('-> a b', () => {
       let grammar = [
         ['->', 'a', 'b']
       ];
-      assert.equal(false, grammarParser.validGrammar(grammar));
+      assert.equal(false, parser.validGrammar(grammar));
     });
     it('e f ->', () => {
       let grammar = [
         ['e', 'f', '->']
       ];
-      assert.equal(false, grammarParser.validGrammar(grammar));
+      assert.equal(false, parser.validGrammar(grammar));
     });
     it('a b -> c, c -> d, e -> f', () => {
       let grammar = [
@@ -74,7 +72,7 @@ describe('Grammar Tokenizer', () => {
         ['c', '->', 'd'],
         ['e', '->', 'f']
       ];
-      assert.equal(false, grammarParser.validGrammar(grammar));
+      assert.equal(false, parser.validGrammar(grammar));
     });
   });
 
@@ -85,7 +83,7 @@ describe('Grammar Tokenizer', () => {
         ['c', '->', 'd'],
         ['e', '->', 'f']
       ];
-      expect(grammarParser.ruleParsing(grammar))
+      expect(parser.ruleParsing(grammar))
         .to.deep
         .equal([
           {first: 'a', map:[['b']]},
@@ -99,7 +97,7 @@ describe('Grammar Tokenizer', () => {
         ['c', '->', 'd','f'],
         ['e', '->', 'f','g']
       ];
-      expect(grammarParser.ruleParsing(grammar))
+      expect(parser.ruleParsing(grammar))
         .to.deep
         .equal([
           {first: 'a', map:[['b','c','d','e']]},
@@ -113,7 +111,7 @@ describe('Grammar Tokenizer', () => {
         ['c', '->', 'd','f','|','|','h'],
         ['e', '->', 'f','g','|','t','a','|','b','c']
       ];
-      expect(grammarParser.ruleParsing(grammar))
+      expect(parser.ruleParsing(grammar))
         .to.deep
         .equal([
           {first: 'a', map:[['b','c','d','e'],['k'],['j']]},
