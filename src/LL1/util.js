@@ -1,7 +1,10 @@
 /* @flow */
 /* jshint ignore:start */
 
-type RuleData = {first: string, map: string[][]};
+type RuleData = {
+  first: string,
+  map: string[][]
+};
 
 const getNonTerminateSymbol = (ruleList: RuleData[]): string[] => {
   return ruleList.map((rule: RuleData) => rule.first);
@@ -9,10 +12,9 @@ const getNonTerminateSymbol = (ruleList: RuleData[]): string[] => {
 
 const getTerminateSymbol = (ruleList: RuleData[]): string[] => {
   let symbolSet: string[] = [];
-  for(let i=0; i<ruleList.length; i++) {
+  for (let i = 0; i < ruleList.length; i++) {
     let subset: string[] = ruleList[i].map.reduce(
-      (x, y) => x.concat(y),
-      []
+      (x, y) => x.concat(y), []
     );
 
     symbolSet = symbolSet.concat(subset);
@@ -20,12 +22,12 @@ const getTerminateSymbol = (ruleList: RuleData[]): string[] => {
 
   let nonTerminateSet: string[] = getNonTerminateSymbol(ruleList);
 
-  symbolSet = symbolSet.filter(function(symbol: string): boolean {
+  symbolSet = symbolSet.filter(function (symbol: string): boolean {
     return nonTerminateSet.indexOf(symbol) === -1;
   });
 
   // Unique symbol
-  symbolSet = symbolSet.filter((v, i, a) => a.indexOf(v) === i)
+  symbolSet = symbolSet.filter((v, i, s) => s.indexOf(v) === i)
 
   return symbolSet;
 }

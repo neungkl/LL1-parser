@@ -61,7 +61,7 @@ const ruleParsing = (ruleWord: string[][]): RuleData[] => {
 const contextToRuleData = (context: string): RuleData[] => {
   let contextObj: string[][] = lineSplit(context);
   if(!validGrammar(contextObj)) {
-    throw new Error("The grammar is wrong formatting.");
+    throw "Wrong Format";
   }
   return ruleParsing(contextObj);
 }
