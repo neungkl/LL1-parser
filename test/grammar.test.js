@@ -54,6 +54,14 @@ describe('Grammar Parser', () => {
       ];
       assert.equal(true, parser.validGrammar(grammar));
     });
+    it('a b -> c, c -> d, e -> f', () => {
+      let grammar = [
+        ['a', 'b', '->', 'c'],
+        ['c', '->', 'd'],
+        ['e', '->', 'f']
+      ];
+      assert.equal(false, parser.validGrammar(grammar));
+    });
     it('-> a b', () => {
       let grammar = [
         ['->', 'a', 'b']
@@ -66,11 +74,10 @@ describe('Grammar Parser', () => {
       ];
       assert.equal(false, parser.validGrammar(grammar));
     });
-    it('a b -> c, c -> d, e -> f', () => {
+    it('->, ->', () => {
       let grammar = [
-        ['a', 'b', '->', 'c'],
-        ['c', '->', 'd'],
-        ['e', '->', 'f']
+        ['->'],
+        ['->']
       ];
       assert.equal(false, parser.validGrammar(grammar));
     });
@@ -85,40 +92,95 @@ describe('Grammar Parser', () => {
       ];
       expect(parser.ruleParsing(grammar))
         .to.deep
-        .equal([
-          {first: 'a', map:[['b']]},
-          {first: 'c', map:[['d']]},
-          {first: 'e', map:[['f']]}
-        ]);
+        .equal([{
+          first: 'a',
+          map: [
+            ['b']
+          ]
+        }, {
+          first: 'c',
+          map: [
+            ['d']
+          ]
+        }, {
+          first: 'e',
+          map: [
+            ['f']
+          ]
+        }]);
     });
     it('a -> b c d e, c -> d f, e -> f g', () => {
       let grammar = [
-        ['a', '->', 'b','c','d','e'],
-        ['c', '->', 'd','f'],
-        ['e', '->', 'f','g']
+        ['a', '->', 'b', 'c', 'd', 'e'],
+        ['c', '->', 'd', 'f'],
+        ['e', '->', 'f', 'g']
       ];
       expect(parser.ruleParsing(grammar))
         .to.deep
-        .equal([
-          {first: 'a', map:[['b','c','d','e']]},
-          {first: 'c', map:[['d','f']]},
-          {first: 'e', map:[['f','g']]}
-        ]);
+        .equal([{
+          first: 'a',
+          map: [
+            ['b', 'c', 'd', 'e']
+          ]
+        }, {
+          first: 'c',
+          map: [
+            ['d', 'f']
+          ]
+        }, {
+          first: 'e',
+          map: [
+            ['f', 'g']
+          ]
+        }]);
     });
     it('a -> b c d e | k | j, c -> d f | | h, e -> f g | t a | b c', () => {
       let grammar = [
-        ['a', '->', 'b','c','d','e','|','k','|','j'],
-        ['c', '->', 'd','f','|','|','h'],
-        ['e', '->', 'f','g','|','t','a','|','b','c']
+        ['a', '->', 'b', 'c', 'd', 'e', '|', 'k', '|', 'j'],
+        ['c', '->', 'd', 'f', '|', '|', 'h'],
+        ['e', '->', 'f', 'g', '|', 't', 'a', '|', 'b', 'c']
       ];
       expect(parser.ruleParsing(grammar))
         .to.deep
-        .equal([
-          {first: 'a', map:[['b','c','d','e'],['k'],['j']]},
-          {first: 'c', map:[['d','f'],['h']]},
-          {first: 'e', map:[['f','g'],['t','a'],['b','c']]}
-        ]);
+        .equal([{
+          first: 'a',
+          map: [
+            ['b', 'c', 'd', 'e'],
+            ['k'],
+            ['j']
+          ]
+        }, {
+          first: 'c',
+          map: [
+            ['d', 'f'],
+            ['h']
+          ]
+        }, {
+          first: 'e',
+          map: [
+            ['f', 'g'],
+            ['t', 'a'],
+            ['b', 'c']
+          ]
+        }]);
     });
+  });
+
+  describe('Combine', () => {
+    it('Case #1', () => {
+
+    });
+    it('Throw #1', () => {
+      expect(
+        parser.contextToRuleData.bind(parser.contextToRuleData, '->\n->')
+      ).to.throw('Wrong Format');
+    });
+    it('Throw #2', () => {
+      expect(
+        parser.contextToRuleData.bind(parser.contextToRuleData, '-> ->')
+      ).to.throw('Wrong Format');
+    });
+    
   });
 
 });

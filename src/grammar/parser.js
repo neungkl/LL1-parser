@@ -23,6 +23,7 @@ const lineSplit = (context: string): string[][] => {
 
 const validGrammar = (ruleWord: string[][]): boolean => {
   for (let i = 0; i < ruleWord.length; i++) {
+    if(ruleWord[i].length < 3) return false;
     for (let j = 0; j < ruleWord[i].length; j++) {
       if (j == 1) {
         if (ruleWord[i][j] !== '->') return false;
