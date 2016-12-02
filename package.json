@@ -4,9 +4,10 @@
   "description": "Verbal Language for blind person",
   "main": "index.js",
   "scripts": {
-    "start": "node program/parser.js",
-    "flow": "flow",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "grunt",
+    "start": "grunt && node ./dist/app.js",
+    "test": "mocha --require babel-core/register",
+    "build": "grunt build"
   },
   "repository": {
     "type": "git",
@@ -19,14 +20,20 @@
   },
   "homepage": "https://github.com/neungkl/2110316-verbal-language#readme",
   "devDependencies": {
+    "babel-core": "^6.18.2",
+    "babel-plugin-syntax-flow": "^6.18.0",
+    "babel-plugin-transform-flow-strip-types": "^6.18.0",
+    "babel-plugin-typecheck": "^3.9.0",
     "babel-preset-es2015": "^6.18.0",
-    "flow-bin": "^0.36.0",
+    "chai": "^3.5.0",
+    "glob": "^7.1.1",
     "grunt": "^1.0.1",
     "grunt-babel": "^6.0.0",
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-flow": "^1.0.3",
     "grunt-webpack": "^1.0.18",
+    "mocha": "^3.2.0",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
   }

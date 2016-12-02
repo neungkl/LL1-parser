@@ -10,5 +10,5 @@ and also implement some basic staff of language parser from study knowledge.
 ## Usage
 
 ```
-npm install -g webpack webpack-dev-server flow
+npm install -g mocha
 ```

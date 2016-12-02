@@ -1,16 +1,14 @@
+var glob = require('glob');
+
 module.exports = function(grunt) {
 
   grunt.initConfig({
     babel: {
-      options: {
-        sourceMap: false,
-        presets: ['es2015']
-      },
       dist: {
         files: [{
           expand: true,
           cwd: 'src/',
-          src: ['*.js'],
+          src: ['**/*.js'],
           dest: 'dist/babel/'
         }]
       }
@@ -19,35 +17,33 @@ module.exports = function(grunt) {
       all_src: {
         options: {
           sourceMap: true,
-          sourceMapName: 'dist/sourceMap/main.map'
+          sourceMapName: 'dist/sourceMap/app.map'
         },
-        src: 'dist/babel/**/*.js',
-        dest: 'dist/main.min.js'
+        src: 'dist/app.js',
+        dest: 'dist/app.min.js'
       }
     },
     flow: {
       watch: {
-        src: 'src/**/*.js',
-        options: {
-          server: true
-        }
+        src: 'src/**/*.js'
       }
     },
     webpack: {
       app: {
-        entry: {
-          main: ['./dist/babel/a.js', './dist/babel/b.js']
-        },
+        entry: glob.sync("./dist/babel/**/*.js"),
         output: {
           path: "dist/",
-          filename: "[name].js",
+          filename: "app.js",
         }
       }
     },
     watch: {
-      flow: {
-        files: ['src/**/*.js'],
-        tasks: ['flow']
+      app: {
+        files: 'src/**/*.js',
+        tasks: ['flow', 'babel', 'webpack'],
+        options: {
+          event: ['added', 'deleted', 'changed']
+        }
       }
     }
   });
@@ -58,6 +54,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-webpack');
 
-  grunt.registerTask('default', ['babel', 'webpack']);
+  grunt.registerTask('valid', ['flow', 'babel']);
+  grunt.registerTask('build', ['flow', 'babel', 'webpack', 'uglify']);
+  grunt.registerTask('watch', ['flow', 'babel', 'webpack', 'watch']);
+  grunt.registerTask('default', ['flow', 'babel', 'webpack']);
 
 };
