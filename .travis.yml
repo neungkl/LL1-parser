@@ -8,9 +8,10 @@ branches:
     - web
 
 install:
-  - npm install -g mocha
+  - npm install -g codecov
   - npm install
 
 script:
-  - npm run-script test
+  - npm run-script test-cov
   - npm run-script build
+  - codecov

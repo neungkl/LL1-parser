@@ -12,5 +12,6 @@ and also implement some basic staff of language parser from study knowledge.
 ## Usage
 
 ```
-npm install -g mocha
+npm install
+npm build
 ```
