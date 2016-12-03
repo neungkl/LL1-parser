@@ -12,18 +12,16 @@ type Map = {
   [key: string]: string[]
 };
 
-const arrayMerge = (a: string[], b: string[]): string[] => {
-  return a.concat(b).filter((v, i, s) => s.indexOf(v) === i);
-}
-
 const firstSetGenerator = (rule: RuleDataList): Map => {
 
   let firstSet: Map = {};
   let cycleCheck: boolean[] = [];
   const termSet: string[] = util.getTerminateSymbol(rule);
 
-  for (let i = 0; i < rule.length; i++)
+  for (let i = 0; i < rule.length; i++) {
+    firstSet[rule[i].first] = [];
     cycleCheck.push(false);
+  }
 
   const recursiveFindFirstSet = (no: number, head: string) => {
 
@@ -33,21 +31,19 @@ const firstSetGenerator = (rule: RuleDataList): Map => {
     }
     cycleCheck[no] = true;
 
-    firstSet[head] = firstSet[head] || [];
-
     for (let m = 0; m < rule[no].map.length; m++) {
 
       let nextHead: string = rule[no].map[m][0];
 
-      if (termSet.indexOf(nextHead) !== -1) {
-        firstSet[head] = arrayMerge(firstSet[head], [nextHead]);
+      if (util.inArray(nextHead, termSet)) {
+        firstSet[head] = util.arrayMerge(firstSet[head], [nextHead]);
       } else {
         for (let i = 0; i < rule.length; i++) {
           if (rule[i].first === nextHead) {
             recursiveFindFirstSet(i, nextHead);
           }
         }
-        firstSet[head] = arrayMerge(firstSet[head], firstSet[nextHead]);
+        firstSet[head] = util.arrayMerge(firstSet[head], firstSet[nextHead]);
       }
     }
 

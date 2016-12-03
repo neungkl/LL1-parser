@@ -7,7 +7,7 @@
     "compile": "grunt",
     "start": "grunt && node ./dist/app.js",
     "test": "mocha --colors --compilers babel-core/register",
-    "test-cov": "babel-node ./node_modules/.bin/isparta cover _mocha -- -R spec",
+    "test-cov": "babel-node ./node_modules/.bin/isparta cover _mocha -- -t 1000 -R spec",
     "build": "grunt build"
   },
   "repository": {

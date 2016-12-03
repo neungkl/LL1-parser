@@ -8,7 +8,7 @@ type RuleData = {
 
 const getNonTerminateSymbol = (ruleList: RuleData[]): string[] => {
   return ruleList.map((rule: RuleData) => rule.first);
-}
+};
 
 const getTerminateSymbol = (ruleList: RuleData[]): string[] => {
   let symbolSet: string[] = [];
@@ -30,9 +30,30 @@ const getTerminateSymbol = (ruleList: RuleData[]): string[] => {
   symbolSet = symbolSet.filter((v, i, s) => s.indexOf(v) === i)
 
   return symbolSet;
+};
+
+const arrayMerge = (a: any[], b: any[]): any[] => {
+  return a.concat(b).filter((v, i, s) => s.indexOf(v) === i);
+};
+
+const arrayDiff = (a: any[], b: any[]): boolean => {
+  if(a.length !== b.length) return true;
+  a = a.sort();
+  b = b.sort();
+  for(let i=0; i<a.length; i++) {
+    if(a[i] !== b[i]) return true;
+  }
+  return false;
+};
+
+const inArray = (a: any, b: any[]) => {
+  return b.indexOf(a) !== -1;
 }
 
 module.exports = {
   getNonTerminateSymbol: getNonTerminateSymbol,
-  getTerminateSymbol: getTerminateSymbol
+  getTerminateSymbol: getTerminateSymbol,
+  arrayMerge: arrayMerge,
+  arrayDiff: arrayDiff,
+  inArray: inArray
 }
