@@ -13,11 +13,9 @@ type Map = {
   [key: string]: string[]
 };
 
-const lambda = 'LAMBDA';
+const lambda = util.lambda;
 
-const removeLambda = (map: string[]): string[] => {
-  return map.filter((each: string) => each !== lambda);
-}
+const removeLambda = util.removeLambda;
 
 const followSetGenerator = (rule: RuleDataList, firstSet: ?Map): Map => {
 
@@ -41,7 +39,7 @@ const followSetGenerator = (rule: RuleDataList, firstSet: ?Map): Map => {
         let N: number = production.length;
         let A: string = rule[ruleNo].first;
 
-        for(let i=N-1; i>=0; i--) {          
+        for(let i=N-1; i>=0; i--) {
 
           // Not in Terminate Set
           let B: string = production[i];

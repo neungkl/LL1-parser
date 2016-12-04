@@ -6,6 +6,8 @@ type RuleData = {
   map: string[][]
 };
 
+const lambda = 'LAMBDA';
+
 const getNonTerminateSymbol = (ruleList: RuleData[]): string[] => {
   return ruleList.map((rule: RuleData) => rule.first);
 };
@@ -50,10 +52,16 @@ const inArray = (a: any, b: any[]) => {
   return b.indexOf(a) !== -1;
 }
 
+const removeLambda = (map: string[]): string[] => {
+  return map.filter((each: string) => each !== lambda);
+}
+
 module.exports = {
   getNonTerminateSymbol: getNonTerminateSymbol,
   getTerminateSymbol: getTerminateSymbol,
   arrayMerge: arrayMerge,
   arrayDiff: arrayDiff,
-  inArray: inArray
+  inArray: inArray,
+  removeLambda: removeLambda,
+  lambda: lambda
 }

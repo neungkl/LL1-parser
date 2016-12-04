@@ -14,5 +14,15 @@ and also implement some basic staff of language parser from study knowledge.
 
 ```
 npm install
-npm build
+npm run-script build
+```
+
+For testing
+
+```
+# Basic test
+npm run-script test
+
+# With coverage report
+npm run-script test-cov 
 ```

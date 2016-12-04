@@ -1,6 +1,14 @@
+# Node Dependencies
 node_modules/
+
+# Code Coverage Directory
 coverage/
+
+# Build Directory
 dist/
 
+# MacOS file
 .DS_Store
+
+# Log File
 npm-debug.log
