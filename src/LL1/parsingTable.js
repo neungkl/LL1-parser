@@ -1,7 +1,7 @@
 /* @flow */
 /* jshint ignore:start */
 
-import util from "./util.js";
+import util from "../util.js";
 import firstSetGenerator from "./firstSet.js";
 import followSetGenerator from "./followSet.js";
 

@@ -1,7 +1,7 @@
 /* @flow */
 /* jshint ignore:start */
 
-import util from "./util.js";
+import util from "../util.js";
 
 type RuleDataList = {
   first: string,

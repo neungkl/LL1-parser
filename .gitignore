@@ -5,7 +5,9 @@ node_modules/
 coverage/
 
 # Build Directory
-dist/
+dist/**/*.*
+!dist/app.min.js
+!dist/sourceMap/app.map
 
 # MacOS file
 .DS_Store
