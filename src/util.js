@@ -1,6 +1,8 @@
 /* @flow */
 /* jshint ignore:start */
 
+// update git
+
 type RuleData = {
   first: string,
   map: string[][]
