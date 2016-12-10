@@ -1,1 +1,89 @@
-<script src="../dist/app.min.js"></script>
+<!doctype html>
+<html>
+  <head>
+
+    <title>LL(1) Parser</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.4/foundation.min.css"
+      integrity="sha256-NqI559iHqiWe5VxDi9mXE8i83ghn8Ru8BINyiPN7lDg="
+      crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+
+    <div class="menu">
+      <div class="row">
+        <div class="small-12 columns">
+          <a href="https://github.com/neungkl/parrots-score-calculation/" target="_blank">
+            <div>LL(1) Parser</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-v-32"></div>
+
+    <div class="row">
+      <div class="small-12 large-8 large-centered columns thin-font">
+        <h3 class="thin-font">LL(1) Parser</h3>
+        <p>LL Parser is an algorithm for parsing a context-free grammar.</p>
+        <p>
+          This site will helps you to convert the CFG to the first set, follow set
+          and parsing used in LL(1) algorithm.
+          This project is also a part of 2110327 Programming Language homework.
+        </p>
+        <p>
+          See full documentation and source code at
+          <a href="https://github.com/neungkl/LL1-parser" target="_blank">
+            https://github.com/neungkl/LL1-parser
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <div class="space-v-16"></div>
+
+    <div class="row">
+      <div class="large-2 columns">&nbsp;</div>
+      <div class="small-12 large-8 columns">
+        <label>
+          Select Example Grammar
+          <select>
+            <option value="husker">Husker</option>
+            <option value="starbuck">Starbuck</option>
+            <option value="hotdog">Hot Dog</option>
+            <option value="apollo">Apollo</option>
+          </select>
+        </label>
+        <div>Enter your grammar here :</div>
+        <div class="space-v-8"></div>
+      </div>
+      <div class="large-2 columns">&nbsp;</div>
+    </div>
+
+    <div class="space-v-8"></div>
+
+    <div class="row thin-font">
+      <div class="large-2 columns">&nbsp;</div>
+      <div class="small-12 large-8 columns">
+        <textarea id="grammar-input" rows="10" placeholder="S -> A|B&#10;A -> cat | dog&#10;B -> bird | fish"></textarea>
+      </div>
+      <div class="large-2 columns">&nbsp;</div>
+    </div>
+
+    <div class="space-v-8">&nbsp;</div>
+
+    <script
+      src="https://code.jquery.com/jquery-2.2.4.min.js"
+      integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+      crossorigin="anonymous"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.4/foundation.min.js"
+      integrity="sha256-6Po73qUOfEfrvKtDy88HN0Xx6wjx3ZlngccJjsIVpIg="
+      crossorigin="anonymous"></script>
+    <script src="../dist/app.min.js"></script>
+  </body>
+</html>
