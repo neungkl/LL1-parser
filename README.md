@@ -1,8 +1,8 @@
 Verbal Language
 ===
 
-[![Build Status](https://travis-ci.org/neungkl/verbal-language-compiler.svg?branch=web)](https://travis-ci.org/neungkl/verbal-language-compiler)
-[![codecov](https://codecov.io/gh/neungkl/verbal-language-compiler/branch/web/graph/badge.svg)](https://codecov.io/gh/neungkl/verbal-language-compiler)
+[![Build Status](https://travis-ci.org/neungkl/LL1-parser.svg?branch=web)](https://travis-ci.org/neungkl/LL1-parser)
+[![codecov](https://codecov.io/gh/neungkl/LL1-parser/branch/web/graph/badge.svg)](https://codecov.io/gh/neungkl/LL1-parser)
 
 A 2110316 Programming Language study class homework. The assignment is
 creating a "Verbal" language with your own style of grammar of language
@@ -24,5 +24,5 @@ For testing
 npm run-script test
 
 # With coverage report
-npm run-script test-cov 
+npm run-script test-cov
 ```
