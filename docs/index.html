@@ -59,7 +59,6 @@
           </select>
         </label>
         <div>Enter your grammar here :</div>
-        <div class="space-v-8"></div>
       </div>
       <div class="large-2 columns">&nbsp;</div>
     </div>
@@ -69,7 +68,8 @@
     <div class="row thin-font">
       <div class="large-2 columns">&nbsp;</div>
       <div class="small-12 large-8 columns">
-        <textarea id="grammar-input" rows="10" placeholder="S -> A|B&#10;A -> cat | dog&#10;B -> bird | fish"></textarea>
+        <textarea id="grammar-input" rows="10" placeholder="S -> A | B&#10;A -> cat | dog&#10;B -> bird | fish"></textarea>
+        <div class="button">Calculate Grammar</div>
       </div>
       <div class="large-2 columns">&nbsp;</div>
     </div>
@@ -85,5 +85,6 @@
       integrity="sha256-6Po73qUOfEfrvKtDy88HN0Xx6wjx3ZlngccJjsIVpIg="
       crossorigin="anonymous"></script>
     <script src="../dist/app.min.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>

@@ -30,7 +30,7 @@ module.exports = function(grunt) {
     },
     webpack: {
       app: {
-        entry: glob.sync("./dist/babel/**/*.js"),
+        entry: "./dist/babel/main.js",
         output: {
           path: "dist/",
           filename: "app.js",
