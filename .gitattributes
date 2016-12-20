@@ -1,0 +1,2 @@
+# Exclude Vendored
+dist/* linguist-vendored

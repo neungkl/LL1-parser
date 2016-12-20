@@ -1,4 +1,4 @@
-console.log(window.func);
+var func = window.func;
 
 var example = {
   catfish: [
@@ -19,10 +19,33 @@ var example = {
 }
 
 $(function() {
+
+  $(document).foundation();
+
   $('.example-selector').change(function() {
     var value = $('.example-selector').val();
     if(value === '-') return ;
     console.log(value, example[value]);
     $('#grammar-input').val(example[value]);
+  });
+
+  console.log(func);
+
+  $('.calculate-btn').click(function() {
+    var grammar = $('#grammar-input').val();
+
+    // TODO : Add try-catch for inifinite loop
+
+    var ruleData = func.parseToRule(grammar);
+    var firstSet = func.firstSet(ruleData);
+    var followSet = func.followSet(ruleData, firstSet);
+    var parsingTable = func.parsingTable(ruleData, firstSet, followSet);
+
+    $('#first-set-info').text(JSON.stringify(firstSet));
+    $('#follow-set-info').text(JSON.stringify(followSet));
+    $('#parsing-table-info').text(JSON.stringify(parsingTable));
+
+    console.log(firstSet, followSet, parsingTable);
+
   });
 });
