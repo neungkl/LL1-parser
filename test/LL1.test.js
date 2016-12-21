@@ -84,6 +84,49 @@ describe('LL1', () => {
         'factor': ['(', 'num']
       }).to.deep.equal(ans);
     });
+    it('Test Case #5', () => {
+      let ans = parser.contextToRuleData(`
+        S -> A B
+        A -> cat | LAMBDA
+        B -> bird | fish
+      `);
+      ans = cleanMap(firstSet(ans));
+      expect({
+        'S': ['LAMBDA', 'bird', 'cat', 'fish'],
+        'A': ['LAMBDA', 'cat'],
+        'B': ['bird', 'fish']
+      }).to.deep.equal(ans);
+    });
+    it('Test Case #6', () => {
+      let ans = parser.contextToRuleData(`
+        S -> A B C
+        A -> cat | LAMBDA
+        B -> fish | LAMBDA
+        C -> bird | LAMBDA
+      `);
+      ans = cleanMap(firstSet(ans));
+      expect({
+        'S': ['LAMBDA', 'bird', 'cat', 'fish'],
+        'A': ['LAMBDA', 'cat'],
+        'B': ['LAMBDA', 'fish'],
+        'C': ['LAMBDA', 'bird']
+      }).to.deep.equal(ans);
+    });
+    it('Test Case #7', () => {
+      let ans = parser.contextToRuleData(`
+        A -> B | C D | D
+        B -> b
+        C -> c | LAMBDA
+        D -> d | LAMBDA
+      `);
+      ans = cleanMap(firstSet(ans));
+      expect({
+        'A': ['LAMBDA', 'b', 'c', 'd'],
+        'B': ['b'],
+        'C': ['LAMBDA', 'c'],
+        'D': ['LAMBDA', 'd']
+      }).to.deep.equal(ans);
+    });
     it('Infinite Loop', () => {
       let ans = parser.contextToRuleData(`
         A -> B
@@ -197,6 +240,21 @@ describe('LL1', () => {
         'F': ['$', ')', '*', '+']
       }).to.deep.equal(ans);
     });
+    it('Test Case #7', () => {
+      let ans = parser.contextToRuleData(`
+        S -> A B C
+        A -> cat | LAMBDA
+        B -> fish | LAMBDA
+        C -> bird | LAMBDA
+      `);
+      ans = cleanMap(followSet(ans));
+      expect({
+        'S': ['$'],
+        'A': ['$', 'bird', 'fish'],
+        'B': ['$', 'bird'],
+        'C': ['$']
+      }).to.deep.equal(ans);
+    });
     it('Infinite Loop', function(done) {
       let ans = parser.contextToRuleData(`
         A -> B
@@ -238,7 +296,7 @@ describe('LL1', () => {
         }],
         table: [
           [0, "id", "assign", "num", "$"],
-          ['S', 2, 7, 7, 6],
+          ['S', [1,2], 7, 7, 6],
           ['V', 3, 6, 7, 6],
           ['E', 4, 7, 5, 6]
         ]
@@ -284,7 +342,7 @@ describe('LL1', () => {
         }],
         table: [
           [0, "b", "c", "d", "$"],
-          ['A', 1, 2, 3, 9],
+          ['A', 1, 2, [2,3], [2,3]],
           ['B', 4, 10, 10, 9],
           ['C', 10, 5, 6, 6],
           ['D', 10, 10, 7, 8]
@@ -399,6 +457,50 @@ describe('LL1', () => {
           ['T', 9, 10, 4, 9, 4, 9],
           ['T\'', 6, 5, 10, 6, 10, 6],
           ['F', 9, 9, 7, 9, 8, 9]
+        ]
+      }
+      ans = parsingTable(ans);
+      expect(ans).to.deep.equal(correct);
+    });
+    it('Test Case #5', () => {
+      let ans = parser.contextToRuleData(`
+        S -> A B C
+        A -> cat | LAMBDA
+        B -> fish | LAMBDA
+        C -> bird | LAMBDA
+      `);
+      let correct = {
+        rule: [{
+          first: '',
+          imply: []
+        }, {
+          first: 'S',
+          imply: ['A', 'B', 'C']
+        }, {
+          first: 'A',
+          imply: ['cat']
+        }, {
+          first: 'A',
+          imply: ['LAMBDA']
+        }, {
+          first: 'B',
+          imply: ['fish']
+        }, {
+          first: 'B',
+          imply: ['LAMBDA']
+        }, {
+          first: 'C',
+          imply: ['bird']
+        }, {
+          first: 'C',
+          imply: ['LAMBDA']
+        }],
+        table: [
+          [0, "cat", "fish", "bird", "$"],
+          ['S', 1, 1, 1, 1],
+          ['A', 2, 3, 3, 3],
+          ['B', 9, 4, 5, 5],
+          ['C', 9, 9, 6, 7]
         ]
       }
       ans = parsingTable(ans);

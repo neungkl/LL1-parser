@@ -229,5 +229,24 @@ describe('Scanner', () => {
     }).to.deep.equal(result);
   });
 
+  it('Test Case #4 (Empty String)', () => {
+    let grammar = `
+      S -> LAMBDA
+    `;
+    let str = '';
+    let expectLog = `
+    Rule : S -> LAMBDA
+    Map Token : λ
+    Map Token : $
+    `;
+    let result = scanner(str, grammarToParsingTable(grammar));
+    expect({
+      status: 'PASS',
+      log: formatLog(expectLog),
+      parsingTree: [{
+        "S": []
+      }, "$"]
+    }).to.deep.equal(result);
+  });
 
 });

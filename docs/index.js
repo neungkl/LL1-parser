@@ -39,23 +39,21 @@ var JSONtoTable = function(json, htitle) {
 }
 
 var parsingTableInfo = function(data) {
-  var txt = '<div><strong>Rule Set</strong></div><div class="space-v-8"></div>';
+  var txt = '<div>'
 
-  txt += '<table>';
-  txt += '<thead><tr><th width="60">#</th><th>Rule</th></thead></thead>';
-
-  for(var i=1; i<data.rule.length; i++) {
-    txt += '<tr>';
-    txt += '<td>' + i + '</td>';
-    txt += '<td>' + data.rule[i].first + ' -> ' + data.rule[i].imply.join(' ') + '</td>';
-    txt += '</tr>'
-  }
-
-  txt += '</table>';
   txt += '<div><strong>Parsing Table</strong></div><div class="space-v-8"></div>';
   txt += '<div class="table-scroll"><table>';
 
   var cleanNumber = function(num) {
+    if($.isArray(num)) {
+      $('.input-alert').show().text(
+        'Error : This LL1 grammar is incorrect. '+
+        'Shouldn\'t have more than 1 rule in single cell in Parsing Table.'
+      );
+      $('a[href="#parsing-table-info"]').click();
+
+      return '<div style="color:red">' + num.join(', ') + '</div>';
+    }
     if(num >= data.rule.length) return '-';
     return num;
   }
@@ -70,7 +68,22 @@ var parsingTableInfo = function(data) {
     txt += '</tr>';
   }
 
-  txt += '</table></div>'
+  txt += '</table></div>';
+
+  txt += '</div>';
+
+  txt += '<strong>Rule Set</strong></div><div class="space-v-8"></div>';
+  txt += '<table>';
+  txt += '<thead><tr><th width="60">#</th><th>Rule</th></thead></thead>';
+
+  for(var i=1; i<data.rule.length; i++) {
+    txt += '<tr>';
+    txt += '<td>' + i + '</td>';
+    txt += '<td>' + data.rule[i].first + ' -> ' + data.rule[i].imply.join(' ') + '</td>';
+    txt += '</tr>'
+  }
+
+  txt += '</table>';
 
   return txt;
 }
@@ -104,6 +117,34 @@ var calculateGrammar = function() {
   return 1;
 }
 
+var scanErr = function(txt) {
+  $('.scan-alert').show().html(txt);
+}
+
+var cleanTree = function(json) {
+  return '<div>' + JSON.stringify(json, null, '\t')
+    .split('\n')
+    .filter(function(x) { return x.indexOf('{') === -1 && x.indexOf('}') === -1; })
+    .map(function(x) {
+      return x.replace(
+        /".+"/g,
+        function(y) { return '<span style="color:#1074ac;">' + y + '</span>'; }
+      );
+    })
+    .join('<br>')
+    .replace(/\t\t/g, '\t')
+    .replace(/\t/g,'<span class="tab">&nbsp;</span>') + '</div>';
+}
+
+var cleanLog = function(log) {
+  return '<table><thead><tr><th>Type</th><th>Detail</th></tr></thead>' +
+  log.map(function(x) {
+    var y = x.replace('λ', '&#955;').split(':');
+    return '<tr><td>' + y[0] + '</td><td>' + y[1] + '</td></tr>';
+  }).join('')
+  + '</table>';
+}
+
 $(function() {
 
   $(document).foundation();
@@ -115,13 +156,11 @@ $(function() {
     $('#tokens-input').val(example[value+'_token']);
   });
 
-  console.log(func);
-
   $('.calculate-btn').click(calculateGrammar);
   $('.scan-btn').click(function() {
     var calStatus = calculateGrammar();
     if(calStatus !== 0) {
-      $('.scan-alert').show().text('Please correct grammar before.');
+      scanErr('Please correct above Grammar before.');
       return ;
     }
 
@@ -129,15 +168,69 @@ $(function() {
 
     var grammar = $('#grammar-input').val();
     var tokens = $('#tokens-input').val();
+
+    if($.trim(tokens).length === 0) {
+      scanErr('Please enter token string');
+      return ;
+    }
+
     var ruleData = func.parseToRule(grammar);
     var parsingTable = func.parsingTable(ruleData);
 
     try {
       var output = func.scanner(tokens, parsingTable);
 
-      $('.scan-result').text(JSON.stringify(output));
+      switch(output.status) {
+        case 'TOKEN_EXCEED' :
+          scanErr(
+            'Your token is longer appropriate length.<br>'+
+            'Error : TOKEN_EXCEED'
+          );
+          break;
+        case 'TOKEN_NOT_MATCH' :
+          scanErr(
+            'Your token not match the grammar symbol.<br>'+
+            'Error : TOKEN_NOT_MATCH'
+          );
+          break;
+        case 'TOKEN_NOT_MATCH_TERMINATE' :
+          scanErr(
+            'Your token not match to terminal-symbol in grammar rule.<br>'+
+            'Error : TOKEN_NOT_MATCH_TERMINATE'
+          );
+          break;
+        case 'SCAN_ERROR' :
+          scanErr(
+            'Token syntax not match with the rule.<br>'+
+            'Error : SCAN_ERROR'
+          );
+          break;
+        case 'POP_ERROR' :
+          scanErr(
+            'Some token are appear too fast.<br>'+
+            'Error : POP_ERROR'
+          );
+          break;
+        case 'STACK_OVERFLOW' :
+          scanErr(
+            'The token is too long for parsing.<br>'+
+            'Error : STACK_OVERFLOW'
+          );
+          break;
+        case 'NOT_LL1' :
+          scanErr(
+            'The Grammar above is not LL1 format.<br>'+
+            'Error : NOT_LL1'
+          );
+          break;
+      }
+
+      if(output.status === 'PASS') {
+        $('#logs-info .result').html(cleanLog(output.log));
+        $('#grammar-tree-info').html(cleanTree(output.parsingTree));
+      }
     } catch(e) {
-      $('.scan-alert').show().text('Error : ' + e);
+      scanErr('Error : ' + e);
     }
   })
 });

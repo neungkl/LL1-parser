@@ -33,17 +33,29 @@ const firstSetGenerator = (rule: RuleDataList): Map => {
 
     for (let m = 0; m < rule[no].map.length; m++) {
 
-      let nextHead: string = rule[no].map[m][0];
+      let hasLambda: boolean = true;
 
-      if (util.inArray(nextHead, termSet)) {
-        firstSet[head] = util.arrayMerge(firstSet[head], [nextHead]);
-      } else {
-        for (let i = 0; i < rule.length; i++) {
-          if (rule[i].first === nextHead) {
-            recursiveFindFirstSet(i, nextHead);
+      for(let j=0; j<rule[no].map[m].length && hasLambda; j++) {
+
+        let nextHead: string = rule[no].map[m][j];
+        hasLambda = false;
+
+        if (util.inArray(nextHead, termSet)) {
+          firstSet[head] = util.arrayMerge(firstSet[head], [nextHead]);
+        } else {
+          for (let i = 0; i < rule.length; i++) {
+            if (rule[i].first === nextHead) {
+              recursiveFindFirstSet(i, nextHead);
+              for(let k=0; k<rule[i].map.length; k++) {
+                if(rule[i].map[k][0] === util.lambda) {
+                  hasLambda = true;
+                  break;
+                }
+              }
+            }
           }
+          firstSet[head] = util.arrayMerge(firstSet[head], firstSet[nextHead]);
         }
-        firstSet[head] = util.arrayMerge(firstSet[head], firstSet[nextHead]);
       }
     }
 

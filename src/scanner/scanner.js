@@ -15,7 +15,7 @@ type ParsingTableData = {
 
 const scan = (message: string, parsingTableRaw: ParsingTableData): mixed => {
 
-  let messageToken: string[] = message.split(' ');
+  let messageToken: string[] = message.split(' ').filter(x => x.length);
 
   let ruleSet: SingleRuleType[] = parsingTableRaw.rule;
   let parsingTable: any[][] = parsingTableRaw.table;
@@ -27,6 +27,16 @@ const scan = (message: string, parsingTableRaw: ParsingTableData): mixed => {
 
   for(let i=0; i<parsingTable.length; i++) {
     nonTermSet.push(parsingTable[i][0]);
+  }
+
+  for(let i=0; i<parsingTable.length; i++) {
+    for(let j=0; j<parsingTable[i].length; j++) {
+      if(Array.isArray(parsingTable[i][j])) {
+        return {
+          status: 'NOT_LL1'
+        };
+      }
+    }
   }
 
   ///////////////////
@@ -60,7 +70,7 @@ const scan = (message: string, parsingTableRaw: ParsingTableData): mixed => {
 
   messageToken.push('$');
 
-  let t = 500;
+  let t = 100000;
 
   while(Q.length > 0 && t-- >= 0) {
 
@@ -135,6 +145,10 @@ const scan = (message: string, parsingTableRaw: ParsingTableData): mixed => {
     }
 
     S.push(curTree);
+  }
+
+  if(t == 0) {
+    status = 'STACK_OVERFLOW';
   }
 
   return {

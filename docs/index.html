@@ -28,7 +28,9 @@
       <h3 class="thin-font">LL(1) Parser</h3>
       <p>LL Parser is an algorithm for parsing a context-free grammar.</p>
       <p>
-        This site will helps you to convert the CFG to the first set, follow set and parsing used in LL(1) algorithm. This project is also a part of 2110327 Programming Language homework.
+        This site will helps you to convert the CFG to the first set,
+        follow set and parsing used in LL(1) algorithm.
+        This project is also a part of 2110327 Programming Language homework.
       </p>
       <p>
         See full documentation and source code at
@@ -93,7 +95,8 @@
     <div class="small-12 large-8 large-centered columns">
       <h4 class="thin-font">Scanner</h4>
       <div>
-        The scanner process can be done after <em>Calculate Grammar</em> complete. Scanner will parse the input string (tokens) to grammar tree, from given grammar syntax above.
+        The scanner process can be done after <em>Calculate Grammar</em> complete.
+        Scanner will parse the input string (tokens) to grammar tree, from given grammar syntax above.
       </div>
     </div>
   </div>
@@ -109,13 +112,45 @@
       </div>
       <div class="button scan-btn">Scan</div>
       <div class="space-v-8"></div>
-      <div class="scan-result">
-        test
+    </div>
+  </div>
+
+  <div class="row thin-font">
+    <div class="small-12 large-8 large-centered columns">
+      <ul class="tabs" data-tabs id="scan-info" role="tablist">
+        <li class="tabs-title is-active"><a href="#grammar-tree-info" role="tab">Grammar Tree</a></li>
+        <li class="tabs-title"><a href="#logs-info" role="tab">Logs</a></li>
+      </ul>
+      <div class="tabs-content" data-tabs-content="scan-info">
+        <div class="tabs-panel is-active" id="grammar-tree-info" role="tabpanel">
+          <em>Grammar Tree is not available.</em>
+        </div>
+        <div class="tabs-panel" id="logs-info" role="tabpanel">
+          <div>
+            <span class="normal-font">[ Rule ]</span> means what rule apply in token.<br>
+            <span class="normal-font">[ Map Token ]</span> means what terminal-symbol that map to token.
+          </div>
+          <div class="space-v-4"></div>
+          <div class="result">
+            <em>Logs is not available.</em>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="space-v-8">&nbsp;</div>
+
+  <div class="row thin-font">
+    <div class="small-12 large-8 large-centered columns">
+      All available source code :
+      <a href="https://github.com/neungkl/LL1-parser" target="_blank">
+          https://github.com/neungkl/LL1-parser
+        </a>
+    </div>
+  </div>
+
+  <div class="space-v-16">&nbsp;</div>
 
   <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/js/foundation.min.js"></script>

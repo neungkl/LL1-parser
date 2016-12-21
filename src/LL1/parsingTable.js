@@ -72,11 +72,16 @@ const parsingTableGenerator = (ruleList: RuleDataList, firstSet: ? Map, followSe
     for (; c <= col + 1; c++) {
       if (nameCol === table[0][c]) break;
     }
-    if (r <= row && c <= col + 1) table[r][c] = val;
-    else {
+    if (r <= row && c <= col + 1) {
+      if(table[r][c] <= ruleCount) {
+        table[r][c] = [table[r][c], val];
+      } else if(Array.isArray(table[r][c])) {
+        table[r][c].push(val);
+      } else {
+        table[r][c] = val;
+      }
+    } else {
       if(nameCol == util.lambda) return ;
-      console.log(table);
-      console.log(nameRow, nameCol, val, r, c);
       throw "Impossible";
     }
   };
@@ -107,6 +112,8 @@ const parsingTableGenerator = (ruleList: RuleDataList, firstSet: ? Map, followSe
     }
   }
 
+  //console.log(firstSet);
+
   // Real putting order number to table
   for (let i = 0; i < ruleCount; i++) {
     let X;
@@ -118,6 +125,9 @@ const parsingTableGenerator = (ruleList: RuleDataList, firstSet: ? Map, followSe
         X = [X];
       } else {
         X = firstSet[ruleSplit[i].imply[0]];
+        if(util.inArray(lambda, X)) {
+          X = X.concat(followSet[ruleSplit[i].imply[0]]);
+        }
       }
     }
     for (let j = 0; j < X.length; j++) {
