@@ -18,14 +18,44 @@ var example = {
   ].join('\n')
 }
 
+var JSONtoTable = function(json, htitle) {
+
+  var txt = '<table>';
+  txt += '<thead><tr><th width="220">Non-Terminal Symbol</th><th>' + htitle + '</th></thead></thead>';
+
+  for (var prop in json) {
+    txt += '<tr>';
+    txt += '<td>' + prop + '</td>';
+    txt += '<td>' + json[prop].map(function(x) {
+      return x === func.lambda ? '&#955;' : x;
+    }).join(', ') + '</td>';
+    txt += '</tr>';
+  }
+
+  return txt + '</table>';
+}
+
+var parsingTableInfo = function(data) {
+  var txt = '<div><strong>Rule Set</strong></div>';
+
+  txt += '<div><strong>Parsing Table</strong></div>';
+
+  txt += '<div class="table-scroll"><table>';
+
+
+
+  txt += '</table></div>'
+
+  return txt;
+}
+
 $(function() {
 
   $(document).foundation();
 
   $('.example-selector').change(function() {
     var value = $('.example-selector').val();
-    if(value === '-') return ;
-    console.log(value, example[value]);
+    if (value === '-') return;
     $('#grammar-input').val(example[value]);
   });
 
@@ -34,16 +64,27 @@ $(function() {
   $('.calculate-btn').click(function() {
     var grammar = $('#grammar-input').val();
 
-    // TODO : Add try-catch for inifinite loop
+    if ($.trim(grammar) === '') {
+      $('.input-alert').show().text('Please enter the input');
+      return ;
+    }
 
-    var ruleData = func.parseToRule(grammar);
-    var firstSet = func.firstSet(ruleData);
-    var followSet = func.followSet(ruleData, firstSet);
-    var parsingTable = func.parsingTable(ruleData, firstSet, followSet);
+    try {
 
-    $('#first-set-info').text(JSON.stringify(firstSet));
-    $('#follow-set-info').text(JSON.stringify(followSet));
-    $('#parsing-table-info').text(JSON.stringify(parsingTable));
+      $('.input-alert').hide();
+
+      var ruleData = func.parseToRule(grammar);
+      var firstSet = func.firstSet(ruleData);
+      var followSet = func.followSet(ruleData, firstSet);
+      var parsingTable = func.parsingTable(ruleData, firstSet, followSet);
+
+      $('#first-set-info').html(JSONtoTable(firstSet, 'First Set'));
+      $('#follow-set-info').html(JSONtoTable(followSet, 'Follow Set'));
+      $('#parsing-table-info').html(parsingTableInfo(parsingTable));
+
+    } catch(e) {
+      $('.input-alert').show().text('Error : ' + e);
+    }
 
     console.log(firstSet, followSet, parsingTable);
 
