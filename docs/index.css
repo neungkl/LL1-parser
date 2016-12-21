@@ -8,6 +8,7 @@
 .space-v-32 { margin: 32px 0px; }
 
 .thin-font { font-weight: 300; }
+.normal-font { font-weight: 400; }
 
 .menu {
   background: #109ac6;
@@ -30,4 +31,9 @@ textarea {
 
 .tabs-title > a {
   font-size: 1rem;
+}
+
+.callout.alert {
+  background-color: #d2452e;
+  color: #fff;
 }

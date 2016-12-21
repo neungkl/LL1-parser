@@ -201,4 +201,33 @@ describe('Scanner', () => {
     }).to.deep.equal(result);
   });
 
+  it('Test Case #3 (Cat Fish)', () => {
+    let grammar = `
+      S -> A | B
+      A -> cat | dog
+      B -> bird | fish
+    `;
+    let str = 'cat fish';
+    let expectLog = `
+    Rule : S -> A
+    Rule : A -> cat
+    Map Token : cat
+    `;
+    let result = scanner(str, grammarToParsingTable(grammar));
+    expect({
+      status: 'TOKEN_EXCEED',
+      log: formatLog(expectLog),
+      parsingTree: [{
+        "S": [
+          {
+            "A": [
+              "cat"
+            ]
+          }
+        ]
+      }]
+    }).to.deep.equal(result);
+  });
+
+
 });

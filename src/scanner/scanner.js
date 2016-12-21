@@ -81,7 +81,11 @@ const scan = (message: string, parsingTableRaw: ParsingTableData): mixed => {
 
     if(util.inArray(symbol, termSet)) {
       if(token !== symbol) {
-        status = 'TOKEN_NOT_MATCH';
+        if(symbol === '$') {
+          status = 'TOKEN_EXCEED';
+        } else {
+          status = 'TOKEN_NOT_MATCH';
+        }
         break;
       }
       S.push(token);
@@ -132,12 +136,6 @@ const scan = (message: string, parsingTableRaw: ParsingTableData): mixed => {
 
     S.push(curTree);
   }
-
-  // if(t > 0) console.log('PASS');
-  //
-  // console.log(status);
-  // console.log(log);
-  // console.log(JSON.stringify(parsingTree));
 
   return {
     status: status,

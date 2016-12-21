@@ -39,19 +39,18 @@
     </div>
   </div>
 
-  <div class="space-v-16"></div>
+  <div class="space-v-8"></div>
 
   <div class="row">
     <div class="small-12 large-8 large-centered columns">
-      <label>
-          Select Example Grammar
-          <select class="example-selector">
-            <option value="-">-</option>
-            <option value="catfish">Cat Dog Bird Fish</option>
-            <option value="parentheses">Parentheses</option>
-            <option value="number">Number</option>
-          </select>
-        </label>
+      <div>Select Example Grammar</div>
+      <div class="space-v-4"></div>
+      <select class="example-selector">
+        <option value="-">-</option>
+        <option value="catfish">Cat Dog Bird Fish</option>
+        <option value="parentheses">Parentheses</option>
+        <option value="number">Number</option>
+      </select>
       <div>Enter your grammar here :</div>
     </div>
   </div>
@@ -61,8 +60,7 @@
   <div class="row">
     <div class="small-12 large-8 large-centered columns">
       <textarea id="grammar-input" rows="10" placeholder="S -> A | B&#10;A -> cat | dog&#10;B -> bird | fish"></textarea>
-      <div data-alert class="callout alert input-alert" style="display:none;">
-        This is an alert - alert that is rounded.
+      <div data-alert class="callout alert input-alert thin-font" style="display:none;">
       </div>
       <div class="button calculate-btn">Calculate Grammar</div>
     </div>
@@ -85,6 +83,34 @@
         <div class="tabs-panel" id="parsing-table-info" role="tabpanel">
           <em>Parsing Table is not available.</em>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="space-v-32"></div>
+
+  <div class="row thin-font">
+    <div class="small-12 large-8 large-centered columns">
+      <h4 class="thin-font">Scanner</h4>
+      <div>
+        The scanner process can be done after <em>Calculate Grammar</em> complete. Scanner will parse the input string (tokens) to grammar tree, from given grammar syntax above.
+      </div>
+    </div>
+  </div>
+
+  <div class="space-v-16"></div>
+
+  <div class="row thin-font">
+    <div class="small-12 large-8 large-centered columns">
+      <div class="normal-font">Enter your tokens here : </div>
+      <div class="space-v-8"></div>
+      <textarea id="tokens-input" rows="3" placeholder="cat"></textarea>
+      <div data-alert class="callout alert scan-alert" style="display:none;">
+      </div>
+      <div class="button scan-btn">Scan</div>
+      <div class="space-v-8"></div>
+      <div class="scan-result">
+        test
       </div>
     </div>
   </div>
