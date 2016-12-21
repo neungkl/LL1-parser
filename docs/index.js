@@ -24,7 +24,7 @@ var example = {
 var JSONtoTable = function(json, htitle) {
 
   var txt = '<table>';
-  txt += '<thead><tr><th width="220">Non-Terminal Symbol</th><th>' + htitle + '</th></thead></thead>';
+  txt += '<thead><tr><th class="table-title-width">Non-Terminal Symbol</th><th>' + htitle + '</th></thead></thead>';
 
   for (var prop in json) {
     txt += '<tr>';

@@ -34,6 +34,26 @@ textarea {
   width: 25px;
 }
 
+.table-title-width {
+  width: 200px;
+}
+
+@media screen and (max-width: 768px) {
+
+  textarea {
+    padding: 10px 8px;
+    font-size: 0.9rem;
+  }
+
+  .tab {
+    width: 10px;
+  }
+
+  .table-title-width {
+    width: 100px;
+  }
+}
+
 #logs-info .result {
   padding: 6px 10px;
 }
@@ -48,6 +68,33 @@ textarea {
 .tabs-title > a {
   font-size: 1rem;
 }
+
+@media screen and (max-width: 768px) {
+
+  .tabs-title > a {
+    font-size: 0.8rem;
+  }
+
+  #logs-info {
+    padding: 10px 6px;
+  }
+
+  #logs-info .result {
+    font-size: 0.8rem;
+    padding: 2px;
+  }
+
+  #first-set-info, #follow-set-info, #parsing-table-info {
+    font-size: 0.8rem;
+  }
+
+  #grammar-tree-info {
+    font-size: 0.8rem;
+    padding: 10px 12px;
+  }
+}
+
+
 
 .callout.alert {
   background-color: #d2452e;
