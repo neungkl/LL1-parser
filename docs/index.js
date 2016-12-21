@@ -36,13 +36,36 @@ var JSONtoTable = function(json, htitle) {
 }
 
 var parsingTableInfo = function(data) {
-  var txt = '<div><strong>Rule Set</strong></div>';
+  var txt = '<div><strong>Rule Set</strong></div><div class="space-v-8"></div>';
 
-  txt += '<div><strong>Parsing Table</strong></div>';
+  txt += '<table>';
+  txt += '<thead><tr><th width="60">#</th><th>Rule</th></thead></thead>';
 
+  for(var i=1; i<data.rule.length; i++) {
+    txt += '<tr>';
+    txt += '<td>' + i + '</td>';
+    txt += '<td>' + data.rule[i].first + ' -> ' + data.rule[i].imply.join(' ') + '</td>';
+    txt += '</tr>'
+  }
+
+  txt += '</table>';
+  txt += '<div><strong>Parsing Table</strong></div><div class="space-v-8"></div>';
   txt += '<div class="table-scroll"><table>';
 
+  var cleanNumber = function(num) {
+    if(num >= data.rule.length) return '-';
+    return num;
+  }
 
+  for(var i=0; i<data.table.length; i++) {
+    txt += '<tr>';
+    for(var j=0; j<data.table[i].length; j++) {
+      txt += '<td>';
+      txt += i + j == 0 ? '#' : cleanNumber(data.table[i][j]);
+      txt += '</td>';
+    }
+    txt += '</tr>';
+  }
 
   txt += '</table></div>'
 
