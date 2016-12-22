@@ -94,7 +94,11 @@ const scan = (message: string, parsingTableRaw: ParsingTableData): mixed => {
         if(symbol === '$') {
           status = 'TOKEN_EXCEED';
         } else {
-          status = 'TOKEN_NOT_MATCH';
+          if(tokenPos === messageToken.length - 1) {
+            status = 'INCOMPLETE';
+          } else {
+            status = 'TOKEN_NOT_MATCH';
+          }
         }
         break;
       }

@@ -249,4 +249,39 @@ describe('Scanner', () => {
     }).to.deep.equal(result);
   });
 
+  it('Test Case #5 (Incomplete)', () => {
+    let grammar = `
+      S -> F | ( S + S )
+      F -> a
+    `;
+    let str = '( a + a';
+    let expectLog = `
+    Rule : S -> ( S + S )
+    Map Token : (
+    Rule : S -> F
+    Rule : F -> a
+    Map Token : a
+    Map Token : +
+    Rule : S -> F
+    Rule : F -> a
+    Map Token : a
+    `;
+    let result = scanner(str, grammarToParsingTable(grammar));
+    expect({
+      status: 'INCOMPLETE',
+      log: formatLog(expectLog),
+      parsingTree: [{
+        "S": ["(", {
+          "S": [{
+            "F": ["a"]
+          }]
+        }, "+", {
+          "S": [{
+            "F": ["a"]
+          }]
+        }]
+      }]
+    }).to.deep.equal(result);
+  });
+
 });

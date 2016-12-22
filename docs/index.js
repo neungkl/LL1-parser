@@ -124,16 +124,22 @@ var scanErr = function(txt) {
 var cleanTree = function(json) {
   return '<div>' + JSON.stringify(json, null, '\t')
     .split('\n')
-    .filter(function(x) { return x.indexOf('{') === -1 && x.indexOf('}') === -1; })
+    .filter(function(x) {
+      return x.indexOf('{') === -1 &&
+        x.indexOf('}') === -1 &&
+        x.indexOf(']') === -1 &&
+        x.indexOf('[') !== 0;
+    })
     .map(function(x) {
       return x.replace(
         /".+"/g,
         function(y) { return '<span style="color:#1074ac;">' + y + '</span>'; }
-      );
+      ).replace(': [', '');
     })
     .join('<br>')
     .replace(/\t\t/g, '\t')
-    .replace(/\t/g,'<span class="tab">&nbsp;</span>') + '</div>';
+    .replace(/\t/g,'<span class="tab">_</span>')
+    .replace(/"/g, '') + '</div>';
 }
 
 var cleanLog = function(log) {
@@ -207,7 +213,7 @@ $(function() {
           break;
         case 'POP_ERROR' :
           scanErr(
-            'Some token are appear too fast.<br>'+
+            'Some token are appear too fast or incomplete.<br>'+
             'Error : POP_ERROR'
           );
           break;
@@ -215,6 +221,12 @@ $(function() {
           scanErr(
             'The token is too long for parsing.<br>'+
             'Error : STACK_OVERFLOW'
+          );
+          break;
+        case 'INCOMPLETE' :
+          scanErr(
+            'Token looks not completed.<br>' +
+            'Error : INCOMPLETE'
           );
           break;
         case 'NOT_LL1' :
@@ -228,6 +240,7 @@ $(function() {
       if(output.status === 'PASS') {
         $('#logs-info .result').html(cleanLog(output.log));
         $('#grammar-tree-info').html(cleanTree(output.parsingTree));
+        $('#json-tree-info').html(JSON.stringify(output.parsingTree));
       }
     } catch(e) {
       scanErr('Error : ' + e);

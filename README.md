@@ -13,6 +13,7 @@ and also implement some basic staff of language parser from study knowledge.
 ## Usage
 
 ```
+npm install -g mocha grunt
 npm install
 npm run-script build
 ```

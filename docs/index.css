@@ -58,11 +58,11 @@ textarea {
   padding: 6px 10px;
 }
 
-#grammar-tree-info {
+#grammar-tree-info div {
   font-family: 'Courier New', 'Roboto', 'Helvatica', Tahoma, sans-serif !important;
   color: #666;
   font-size: 1rem;
-  padding: 20px 35px;
+  padding: 10px 15px;
 }
 
 .tabs-title > a {
